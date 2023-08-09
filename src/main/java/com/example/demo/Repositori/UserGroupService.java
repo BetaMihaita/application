@@ -1,8 +1,10 @@
-package com.example.demo.services;
+package com.example.demo.Repositori;
 
 import com.example.demo.init.model.UserGroup;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserGroupService {
     private final UserGroupRepository userGroupRepository;
     @Autowired

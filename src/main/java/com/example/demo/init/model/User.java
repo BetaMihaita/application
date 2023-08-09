@@ -14,7 +14,7 @@ public class User {
 
     private  String userName;
     private  String password;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     private List<UserGroup> userGroups = new ArrayList<>();
 
     public Long getId() {

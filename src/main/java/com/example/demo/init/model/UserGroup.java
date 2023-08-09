@@ -12,7 +12,7 @@ public class UserGroup {
     private Long id;
     private  String name;
     private  String description;
-    @ManyToMany(mappedBy = "userGroups")
+    @ManyToMany(mappedBy = "userGroups",cascade = CascadeType.MERGE)
     private List<User> userList= new ArrayList<>();
 
 

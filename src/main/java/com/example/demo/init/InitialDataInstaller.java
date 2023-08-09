@@ -1,31 +1,43 @@
 package com.example.demo.init;
 
+import com.example.demo.DemoApplication;
+import com.example.demo.Repositori.LocationService;
+import com.example.demo.init.model.StorageLocation;
+import com.example.demo.init.model.TransitLocation;
 import com.example.demo.init.model.User;
 import com.example.demo.init.model.UserGroup;
 
-import com.example.demo.services.UserGroupService;
-import com.example.demo.services.UserService;
+import com.example.demo.Repositori.UserGroupService;
+import com.example.demo.Repositori.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class InitialDataInstaller {
 	private final UserService userService;
 	private final UserGroupService userGroupService;
+	private final LocationService locationService;
 
 	@Autowired
 
 
-	public InitialDataInstaller(UserService userService, UserGroupService userGroupService) {
+	public InitialDataInstaller(UserService userService, UserGroupService userGroupService,LocationService locationService) {
 		this.userService = userService;
 		this.userGroupService = userGroupService;
+		this.locationService= locationService;
 	}
 
 
 
 	public static void main(String[] args) {
+		ConfigurableApplicationContext context = SpringApplication.run(DemoApplication.class, args);
 
-
-//			InitialDataInstaller app = new InitialDataInstaller();
-//			app.run();
+		InitialDataInstaller initializationService = context.getBean(InitialDataInstaller.class);
+		initializationService.run();
+		context.close();
 
 
 	}
@@ -44,6 +56,7 @@ public class InitialDataInstaller {
 		// TransitLocation: RECEIVING, PICKING, SHIPPING
 
 	}
+
 
 	private void createUsers() {
 
@@ -89,14 +102,14 @@ public class InitialDataInstaller {
 
 
 
-				for (int i = 1; i <= 10; i++) {
-					for (int x = 1; x <= 50; x++) {
+				for (int i = 1; i <= 5; i++) {
+					for (int x = 1; x <= 10; x++) {
 						for (int y = 1; y <= 5; y++) {
 							for (int z = 1; z <= 2; z++) {
 								String barcode = String.format("HBW%02d%03d%02d%02d", i, x, y, z);
-								// System.out.println(barcode);
+								 System.out.println(barcode);
 
-//								new StorageLocation(barcode, i, x, y, z));
+								locationService.saveLocatione(new StorageLocation(barcode, i, x, y, z));
 
 							}
 
@@ -106,13 +119,13 @@ public class InitialDataInstaller {
 
 				}
 
-//				session.save(new TransitLocation("RECEIVING"));// RECEIVING
-//				session.save(new TransitLocation("PICKING");// PICKING
-//				session.save(new TransitLocation("SHIPPING"));// SHIPPING
-//				session.save(new TransitLocation("LOST_AND_FOUND"));// LOST_AND_FOUND
-//				session.save(new TransitLocation("GATE01"));//
-//				session.save(new TransitLocation("GATE02"));// ALL 3 GATES
-//				session.save(new TransitLocation("GATE03"));//
+		locationService.saveTransitLocatione(new TransitLocation("RECEIVING"));// RECEIVING
+		locationService.saveTransitLocatione(new TransitLocation("PICKING"));// PICKING
+		locationService.saveTransitLocatione(new TransitLocation("SHIPPING"));// SHIPPING
+		locationService.saveTransitLocatione(new TransitLocation("LOST_AND_FOUND"));// LOST_AND_FOUND
+		locationService.saveTransitLocatione(new  TransitLocation("GATE01"));//
+		locationService.saveTransitLocatione(new TransitLocation("GATE02"));// ALL 3 GATES
+		locationService.saveTransitLocatione(new TransitLocation("GATE03"));//
 
 			}
 
